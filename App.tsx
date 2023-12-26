@@ -24,17 +24,14 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+import { Home } from './screens';
 
 
 function App(): React.JSX.Element {
 
   return (
     <SafeAreaView >
-      <Text>Primera react native cli app</Text>
+      <Home />
     </SafeAreaView>
   );
 }
