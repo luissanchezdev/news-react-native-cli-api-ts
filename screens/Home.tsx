@@ -5,6 +5,7 @@ import { getApod } from '../services/fetchAPOD'
 import { apiApodError, apiApodResponse } from '../types/types';
 import { StyleSheet } from 'react-native'
 import { COLORS } from '../constants'
+import ListTodayApod from '../src/components/ListTodayApod';
 
 function Home() {
   const [newsApod, setNewsApod] = useState<apiApodResponse>()
@@ -13,10 +14,12 @@ function Home() {
   const requestNewsApod = async() => {
     try {
       const dataResponse = await getApod()
-      setError({
-        message: "undefined"
-      })
-      return setNewsApod(dataResponse)
+      if(!Array.isArray(dataResponse)){
+        setError({
+          message: "undefined"
+        })
+        return setNewsApod(dataResponse)
+      }
     } catch (error) {
       if(error instanceof Response) {
         const errorData : apiApodError = await error.json()
@@ -51,6 +54,7 @@ function Home() {
             <Text style={ styles.text }>En estos momentos tenemos algunas dificultades. Volveremos pronto</Text>
           </>
         }
+        <ListTodayApod />
       </View>
     </ScrollView>
   )

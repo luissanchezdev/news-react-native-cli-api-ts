@@ -1,10 +1,8 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native'
-import { FC } from 'react'
-import { apiApodResponse } from '../../types/types';
 import { COLORS, SIZES, FONTS, SHADOWS } from '../../constants'
 
 
-function TodayApod ({ title, image, url, description, date } : {title : string, image : string, url : string, description : string, date : string}) {
+function TodayApod ({ title, image, date } : {title : string, image : string, date : string}) {
   return (
     <TouchableOpacity 
       style={ styles.container }
@@ -12,11 +10,14 @@ function TodayApod ({ title, image, url, description, date } : {title : string, 
     >
       <View style={ styles.containerImage}>
         <Image 
-          source={{ uri: url }}
+          source={{ uri: image }}
           style={ styles.image }
         />
       </View>
-      <Text style={ styles.title }>{ title }</Text>
+      <Text 
+        style={ styles.title }
+        numberOfLines={2}  
+      >{ title }</Text>
       <Text style={ styles.date }>{ date }</Text>
     </TouchableOpacity>
   )
@@ -25,7 +26,7 @@ function TodayApod ({ title, image, url, description, date } : {title : string, 
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    height: 320,
+    height: 350,
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 24,
@@ -51,7 +52,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: COLORS.lightWhite,
     fontFamily: FONTS.semibold,
-    fontSize: SIZES.large
+    fontSize: SIZES.large    
   },
   description:{
 
