@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from 'react-na
 import { COLORS, SIZES, FONTS, SHADOWS } from '../../constants'
 
 
-function TodayApod ({ title, image, date } : {title : string, image : string, date : string}) {
+function TodayApod ({ title, image, date, url } : {title : string, image : string, date : string, url : string}) {
   return (
     <TouchableOpacity 
       style={ styles.container }
@@ -10,7 +10,7 @@ function TodayApod ({ title, image, date } : {title : string, image : string, da
     >
       <View style={ styles.containerImage}>
         <Image 
-          source={{ uri: image }}
+          source={{ uri: url }}
           style={ styles.image }
         />
       </View>
