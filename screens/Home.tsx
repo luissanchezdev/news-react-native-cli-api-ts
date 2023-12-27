@@ -37,11 +37,14 @@ function Home() {
   const styles = StyleSheet.create({
     text: {
       color: COLORS.red
+    },
+    container: {
+      backgroundColor: COLORS.black
     }
   })
 
   return (
-    <ScrollView>
+    <ScrollView style={ styles.container }>
       <Header/>
       <View>
         { newsApod?.title &&

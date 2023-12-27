@@ -21,3 +21,8 @@ export type apiApodResponseOriginal = {
 export type apiApodError = {
   message: string
 }
+
+export type RootStackParamList = {
+  Home:          undefined;
+  DetailsScreen: undefined
+}
