@@ -1,23 +1,34 @@
 import React, { useEffect, useState } from 'react'
 import { View, ScrollView, FlatList, Text, TouchableOpacity } from 'react-native'
-import { Header } from '../src/components'
-import { URL_REQ_APOD } from '../utils/config'
+import { Header, TodayApod } from '../src/components'
 import { getApod } from '../services/fetchAPOD'
 import { apiApodError, apiApodResponse } from '../types/types';
 import { StyleSheet } from 'react-native'
 import { COLORS } from '../constants'
 
 function Home() {
-  const [news, setNews] = useState<apiApodResponse[]>([])
+  const [newsApod, setNewsApod] = useState<apiApodResponse>()
   const [error, setError] = useState<apiApodError>()
 
-  const dataRequest = async() => {
-    const dataResponse = await getApod(URL_REQ_APOD)
-    setNews([...news, dataResponse])
+  const requestNewsApod = async() => {
+    try {
+      const dataResponse = await getApod()
+      setError({
+        message: "undefined"
+      })
+      return setNewsApod(dataResponse)
+    } catch (error) {
+      if(error instanceof Response) {
+        const errorData : apiApodError = await error.json()
+        return setError(errorData)
+      } else {
+        return setError({message: 'Error desconocido'})
+      }
+    }
   }
 
   useEffect(() => {
-    dataRequest()
+    requestNewsApod()
   },[])
 
   const styles = StyleSheet.create({
@@ -30,15 +41,16 @@ function Home() {
     <ScrollView>
       <Header/>
       <View>
-        <FlatList
-          data={news}
-          renderItem={({item}) => <Text style={ styles.text}>{ item.title }</Text>}
-        />
-        <TouchableOpacity
-          onPress={() => dataRequest()}
-        >
-          <Text style={ styles.text }>Update</Text>
-        </TouchableOpacity>
+        { newsApod?.title &&
+          <TodayApod 
+            { ...newsApod }
+          />     
+        }
+        { error?.message != undefined || 'undefined' &&
+          <>
+            <Text style={ styles.text }>En estos momentos tenemos algunas dificultades. Volveremos pronto</Text>
+          </>
+        }
       </View>
     </ScrollView>
   )

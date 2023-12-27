@@ -1,16 +1,15 @@
 import { apiApodResponse, apiApodResponseOriginal } from '../types/types'
 import dataApiPod  from '../mocks/dataApiApod.json'
+import { URL_REQ_APOD } from '../utils/config'
 
 // Get Astronomy Photo of the Day
 
-export const getApod : (urlReqApod : string) => Promise<apiApodResponse> = async(urlReqApod : string) => {
+export const getApod : (urlParams? : string) => Promise<apiApodResponse> = async(urlParams? : string) => {
   try {
     // fetch api
-    //const dataRequest = await fetch(`${ urlReqApod }`)
-    //const dataResponse = await dataRequest.json() as apiApodResponse
+    //const dataRequest = await fetch(`${ URL_REQ_APOD }${ typeof urlParams != 'undefined' && urlParams?.length > 0 ? urlParams : '' }`)
+    //const dataResponseOriginal = await dataRequest.json() as apiApodResponseOriginal
     const dataResponseOriginal = dataApiPod as apiApodResponseOriginal
-    console.log({ dataResponseOriginal })
-    console.log('ejecutandose en Home')
     const dataResponse : apiApodResponse = {
       copyright: dataResponseOriginal.copyright,     
       date: dataResponseOriginal.date,
